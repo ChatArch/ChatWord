@@ -1,0 +1,9 @@
+site_name: ChatWord 文档
+site_url: https://ChatArch.github.io/ChatWord
+repo_url: https://github.com/ChatArch/ChatWord
+theme:
+  name: material
+  language: zh
+nav:
+  - 首页: index.md
+  - English: index.en.md
