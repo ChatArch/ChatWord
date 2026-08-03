@@ -22,11 +22,30 @@ ChatWord: Word document workflows for ChatArch.
 ## 快速开始
 
 ```bash
-pip install -e ".[dev]"
+pip install -e ".[dev,word,pdf]"
 chatword hello ChatArch
+chatword inspect ./example.docx
+chatword extract ./example.pdf -o ./example.txt
 python -m pytest -q
 python -m build
 ```
+
+## Word/PDF 依赖
+
+基础安装只包含 CLI 运行时；文档解析依赖按任务拆成 optional extras：
+
+```bash
+pip install "ChatWord[word]"   # python-docx, mammoth
+pip install "ChatWord[pdf]"    # pypdf, pdfplumber
+pip install "ChatWord[ocr]"    # pdf2image, pytesseract；还需要系统 OCR 工具
+pip install "ChatWord[all]"    # 常见 Word/PDF/OCR 栈
+```
+
+## 任务导向 CLI
+
+- `chatword inspect FILE [--json]`：识别文档类型、大小、解析器可用性和轻量元数据。
+- `chatword extract FILE [-o OUTPUT] [--force]`：从 `.docx` 或 `.pdf` 抽取纯文本；默认拒绝覆盖已有输出，且始终拒绝覆盖输入文档。
+- 详细设计见 `docs/cli-design.md`。
 
 ## CLI 规范
 

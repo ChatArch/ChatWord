@@ -2,6 +2,10 @@
 
 Long-lived documentation for `ChatWord` lives here.
 
+## CLI
+
+- [CLI design](cli-design.md): task-oriented commands, optional extras, and next capability plan.
+
 ## Local Preview
 
 ```bash
