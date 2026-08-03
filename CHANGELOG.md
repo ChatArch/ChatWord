@@ -14,6 +14,9 @@
 - Added the shared `-i/-I` missing-input contract to document commands.
 - Protected extraction outputs from accidental overwrite and normalized parser failures into ChatWord errors.
 - Added real DOCX/PDF, encrypted PDF, and output-safety coverage to CI.
+- Aligned the documentation site with the ChatArch canonical domain, suffix-based Chinese/English builds, and public preview URLs.
+- Added task-oriented home, quick-start, CLI-tree, capability-map, and CLI/API design pages in both languages.
+- Synchronized README links, package documentation metadata, generated-site ignores, and repository documentation surfaces.
 
 ## 0.1.0 - 2026-06-23
 

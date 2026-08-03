@@ -1,42 +1,43 @@
-# CLI 设计
+# CLI 与 Python API 设计
 
-ChatWord CLI 应保持任务导向：用户从文档任务出发，而不是从底层解析库名称出发。
+## 设计目标
 
-## 已实现 MVP
+ChatWord 的命令面保持任务导向：先检查文档，再抽取文本。文档中的规划能力不会提前占用 CLI 命令。
 
-| 任务 | 命令 | 用途 |
+## 命令与 API 映射
+
+| 任务 | CLI | Python API |
 | --- | --- | --- |
-| 查看文件信息 | `chatword inspect FILE [--json]` | 识别 Word/PDF 类型、文件大小、解析器可用性和轻量元数据。 |
-| 抽取正文 | `chatword extract FILE [-o OUTPUT] [--force]` | 从 `.docx` 或 `.pdf` 抽取纯文本，供总结、索引或后续 agent 流程使用。已有输出必须显式 `--force`，输入文档永不覆盖。 |
+| 识别文档类型 | `chatword inspect FILE` | `detect_document_kind(path)` |
+| 查看元数据 | `chatword inspect FILE [--json]` | `inspect_document(path)` |
+| 抽取纯文本 | `chatword extract FILE` | `extract_text(path)` |
+| 写入输出文件 | `chatword extract FILE -o OUTPUT` | 调用方负责写入 API 返回文本 |
+
+## 错误边界
+
+公共 API 使用 `ChatWordError` 家族表达可预期失败：
+
+- `MissingDependencyError`：缺少 Word/PDF optional extra。
+- `UnsupportedDocumentError`：当前不支持该文档类型或操作。
+- `DocumentParseError`：文件缺失、损坏、加密或 parser 读取失败。
+
+CLI 将这些错误转换为简短错误消息和非零退出码，不显示第三方 traceback。
+
+## 输出安全
+
+- 不指定 `-o` 时，正文写到 stdout。
+- 指定 `-o` 时，已有文件默认不覆盖。
+- `--force` 只允许替换另一个输出文件，不能把输入文档当作输出。
+- 写文件前先完成路径保护检查。
+
+## 交互约定
+
+`inspect` 和 `extract` 使用 `CommandSchema`、`add_interactive_option()` 与 `resolve_command_inputs()`：
+
+- 参数完整时直接执行。
+- 缺少路径且允许交互时才补问。
+- `-I` 始终关闭交互，适合自动化调用。
 
 ## 依赖模型
 
-基础安装保持轻量，文档解析器通过 optional extras 安装：
-
-```bash
-pip install "ChatWord[word]"   # python-docx, mammoth
-pip install "ChatWord[pdf]"    # pypdf, pdfplumber
-pip install "ChatWord[ocr]"    # pdf2image, pytesseract；还需要系统 OCR 工具
-pip install "ChatWord[all]"    # 常见 Word/PDF/OCR 栈
-```
-
-## 下一批任务命令
-
-这些命令围绕常见文档处理任务设计：
-
-| 任务 | 规划命令 | 说明 |
-| --- | --- | --- |
-| 抽取表格 | `chatword tables FILE --format csv|json` | Word 表格走 `python-docx`，PDF 表格走 `pdfplumber`。 |
-| 转 Markdown | `chatword convert FILE -o OUT.md` | `.docx` 优先用 `mammoth` 做语义转换；PDF 先走文本优先。 |
-| 生成大纲 | `chatword outline FILE` | 返回标题、页锚点和近似结构，方便 agent 规划。 |
-| 扫描件 OCR | `chatword ocr FILE -o OUT.txt` | 作为可选能力，因为依赖 Tesseract、Poppler 等系统组件。 |
-| 批量处理 | `chatword batch INPUT_DIR --glob "*.pdf" --task extract` | 用于项目文件夹和 agent pipeline。 |
-
-## 输出规则
-
-- 面向人的输出应简洁、稳定，方便复制粘贴。
-- 面向自动化和 agent 的命令应提供 `--json`。
-- 缺少 optional dependency 时，应明确提示需要安装哪个 extra。
-- 除非参数缺失且任务可恢复，否则命令不应主动交互式提问。
-- 文件参数遵循统一 `-i/-I` 交互契约；自动化场景可用 `-I` 禁止补问。
-- 解析错误统一收敛为 ChatWord 错误，不向 CLI 泄漏第三方 parser 异常。
+基础安装只包含 CLI 运行时。Word、PDF 和 OCR parser 通过 `word`、`pdf`、`ocr` 与 `all` extras 选择。CI 安装 `word` 与 `pdf`，确保真实 parser 路径进入测试。

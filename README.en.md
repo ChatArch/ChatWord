@@ -5,19 +5,21 @@
     <a href="https://github.com/ChatArch/ChatWord/actions/workflows/ci.yml">
         <img src="https://github.com/ChatArch/ChatWord/actions/workflows/ci.yml/badge.svg" alt="Tests" />
     </a>
-    <a href="https://ChatArch.github.io/ChatWord">
+    <a href="https://arch.gh.wzhecnu.cn/ChatWord/">
         <img src="https://img.shields.io/badge/docs-mkdocs-blue.svg" alt="Documentation" />
     </a>
 </div>
 
 <div align="center">
 
-[English](README.en.md) | [简体中文](README.md)
+**English** | [中文说明](README.md)
 </div>
 
 # ChatWord
 
 ChatWord: Word document workflows for ChatArch.
+
+[Documentation](https://arch.gh.wzhecnu.cn/ChatWord/) · [Quick Start](https://arch.gh.wzhecnu.cn/ChatWord/en/quickstart/) · [CLI Tree](https://arch.gh.wzhecnu.cn/ChatWord/en/cli-tree/) · [Capability Map](https://arch.gh.wzhecnu.cn/ChatWord/en/capability-map/)
 
 ## Quick Start
 
@@ -45,7 +47,7 @@ pip install "ChatWord[all]"    # common Word/PDF/OCR stack
 
 - `chatword inspect FILE [--json]`: detect document type, size, parser availability, and lightweight metadata.
 - `chatword extract FILE [-o OUTPUT] [--force]`: extract plain text from `.docx` or `.pdf`; existing outputs require `--force`, and the input document is never overwritten.
-- Full design: `docs/cli-design.md`.
+- See the [CLI Tree](https://arch.gh.wzhecnu.cn/ChatWord/en/cli-tree/) for the complete command surface and [CLI Design](https://arch.gh.wzhecnu.cn/ChatWord/en/cli-design/) for Python API mapping.
 
 ## CLI Contract
 
@@ -58,10 +60,8 @@ This template depends on `chatstyle>=0.1.0` and `chatenv>=0.1.1`. New commands s
 ## Layout
 
 - `src/`: package source code
-- `tests/code-tests/`: code tests and migrated historical tests
-- `tests/cli-tests/`: real CLI tests, doc-first
-- `tests/mock-cli-tests/`: mock/fake CLI tests, doc-first
-- `docs/`: long-lived project docs built by mkdocs
+- `tests/`: CLI, parser, error-contract, and output-safety tests
+- `docs/`: bilingual MkDocs sources maintained through `.en.md` mirrors
 
 ## Development Notes
 
