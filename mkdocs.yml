@@ -1,10 +1,71 @@
 site_name: ChatWord 文档
-site_url: https://ChatArch.github.io/ChatWord
+site_description: ChatWord 的 Word/PDF 检查、文本抽取与自动化接口文档。
+site_url: https://arch.gh.wzhecnu.cn/ChatWord/
 repo_url: https://github.com/ChatArch/ChatWord
+repo_name: ChatArch/ChatWord
+edit_uri: edit/main/docs/
+docs_dir: docs/
+
 theme:
   name: material
   language: zh
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.action.edit
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: suffix
+      fallback_to_default: true
+      reconfigure_material: true
+      reconfigure_search: true
+      languages:
+        - locale: zh
+          default: true
+          name: 中文
+          build: true
+          site_name: ChatWord 文档
+        - locale: en
+          name: English
+          build: true
+          site_name: ChatWord Documentation
+          nav_translations:
+            首页: Home
+            快速开始: Quick Start
+            命令与接口: Commands and Interfaces
+            CLI 树: CLI Tree
+            CLI 设计: CLI Design
+            产品边界: Product Boundaries
+            能力地图: Capability Map
+
+extra:
+  alternate:
+    - name: 中文
+      link: /ChatWord/
+      lang: zh
+    - name: English
+      link: /ChatWord/en/
+      lang: en
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+
 nav:
   - 首页: index.md
-  - CLI 设计: cli-design.md
-  - English: index.en.md
+  - 快速开始: quickstart.md
+  - 命令与接口:
+      - CLI 树: cli-tree.md
+      - CLI 设计: cli-design.md
+  - 产品边界:
+      - 能力地图: capability-map.md

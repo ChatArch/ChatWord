@@ -20,7 +20,7 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/ChatArch/ChatWord"
 Repository = "https://github.com/ChatArch/ChatWord"
-Documentation = "https://ChatArch.github.io/ChatWord"
+Documentation = "https://arch.gh.wzhecnu.cn/ChatWord/"
 
 [project.scripts]
 chatword = "chatword.cli:main"
@@ -38,7 +38,7 @@ all = [
     "pytesseract>=0.3.13",
 ]
 dev = ["build", "pytest", "twine"]
-docs = ["mkdocs>=1.4.0", "mkdocs-material>=9.0.0", "mike>=2.0.0"]
+docs = ["mkdocs>=1.4.0", "mkdocs-material>=9.0.0", "mkdocs-static-i18n>=1.2.0", "mike>=2.0.0"]
 
 [tool.setuptools.dynamic]
 version = {attr = "chatword.__version__"}

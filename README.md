@@ -5,19 +5,21 @@
     <a href="https://github.com/ChatArch/ChatWord/actions/workflows/ci.yml">
         <img src="https://github.com/ChatArch/ChatWord/actions/workflows/ci.yml/badge.svg" alt="Tests" />
     </a>
-    <a href="https://ChatArch.github.io/ChatWord">
+    <a href="https://arch.gh.wzhecnu.cn/ChatWord/">
         <img src="https://img.shields.io/badge/docs-mkdocs-blue.svg" alt="Documentation" />
     </a>
 </div>
 
 <div align="center">
 
-[English](README.en.md) | [简体中文](README.md)
+**简体中文** | [英文版](README.en.md)
 </div>
 
 # ChatWord
 
-ChatWord: Word document workflows for ChatArch.
+ChatWord 为 ChatArch 提供 Word/PDF 文档检查、纯文本抽取与自动化接口。
+
+[完整文档](https://arch.gh.wzhecnu.cn/ChatWord/) · [快速开始](https://arch.gh.wzhecnu.cn/ChatWord/quickstart/) · [CLI 树](https://arch.gh.wzhecnu.cn/ChatWord/cli-tree/) · [能力地图](https://arch.gh.wzhecnu.cn/ChatWord/capability-map/)
 
 ## 快速开始
 
@@ -45,7 +47,7 @@ pip install "ChatWord[all]"    # 常见 Word/PDF/OCR 栈
 
 - `chatword inspect FILE [--json]`：识别文档类型、大小、解析器可用性和轻量元数据。
 - `chatword extract FILE [-o OUTPUT] [--force]`：从 `.docx` 或 `.pdf` 抽取纯文本；默认拒绝覆盖已有输出，且始终拒绝覆盖输入文档。
-- 详细设计见 `docs/cli-design.md`。
+- 完整命令面见 [CLI 树](https://arch.gh.wzhecnu.cn/ChatWord/cli-tree/)，设计与 Python API 映射见 [CLI 设计](https://arch.gh.wzhecnu.cn/ChatWord/cli-design/)。
 
 ## CLI 规范
 
@@ -58,10 +60,8 @@ pip install "ChatWord[all]"    # 常见 Word/PDF/OCR 栈
 ## 目录结构
 
 - `src/`：包源码
-- `tests/code-tests/`：代码测试和历史测试迁移
-- `tests/cli-tests/`：真实 CLI 测试，doc-first
-- `tests/mock-cli-tests/`：mock/fake CLI 测试，doc-first
-- `docs/`：长期维护文档，由 mkdocs 构建
+- `tests/`：CLI、parser、错误契约和输出安全测试
+- `docs/`：按 `.en.md` 镜像维护的中英文 MkDocs 文档
 
 ## 开发说明
 
